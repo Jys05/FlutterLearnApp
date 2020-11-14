@@ -33,11 +33,45 @@ class _ShoppingListState extends State<ShoppingList> {
     });
   }
 
+  String t = "";
+  Text _text = Text('Treasury');
+  TextField _textField = TextField(
+    obscureText: true,
+    decoration: InputDecoration(
+      border: OutlineInputBorder(),
+      labelText: 'Password',
+    ),
+    onChanged: (tv){
+      print("object:"+tv);
+    },
+  );
+
+  @override
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Shopping List'),
+        leading: new IconButton(
+            icon: new Icon(Icons.add , color: Colors.amberAccent),
+            onPressed: (){
+              showDialog(context: context,
+                  builder: (BuildContext context) {
+                    return SimpleDialog(
+                      title: const Text('Select assignment'),
+                      children: <Widget>[
+                        SimpleDialogOption(
+                          onPressed: () {print("${_textField.toString()}"); },
+                          child: _textField,
+                        ),
+                        SimpleDialogOption(
+                          onPressed: () {print("${_textField.toString()}");  },
+                          child: const Text('State department'),
+                        ),
+                      ],
+                    );
+                  });
+            }),
       ),
       body: new ListView(
         padding: new EdgeInsets.symmetric(vertical: 8.0),
@@ -50,5 +84,36 @@ class _ShoppingListState extends State<ShoppingList> {
         }).toList(),
       ),
     );
+  }
+
+
+
+  Future<void> _askedToLead(BuildContext context) async {
+    switch (await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('Select assignment'),
+            children: <Widget>[
+              SimpleDialogOption(
+                onPressed: () { },
+                child: const Text('Treasury department'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {  },
+                child: const Text('State department'),
+              ),
+            ],
+          );
+        }
+    )) {
+      case "1":
+      // Let's go.
+      // ...
+        break;
+      case "2":
+      // ...
+        break;
+    }
   }
 }
